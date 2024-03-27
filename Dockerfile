@@ -1,5 +1,5 @@
 FROM python:3.11-alpine
-LABEL maintainer="lorenz.vanthillo@gmail.com"
+LABEL maintainer="test@gmail.com"
 COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt

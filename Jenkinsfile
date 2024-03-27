@@ -33,7 +33,7 @@ podTemplate(yaml: '''
     stage('Update Flux Repo') {
       git credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
       container('kaniko') {
-          ls
+          echo "Hello World"
       }
     }
 

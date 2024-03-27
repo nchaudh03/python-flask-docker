@@ -22,7 +22,7 @@ podTemplate(yaml: '''
               path: config.json
 ''') {
   node(POD_LABEL) {
-    stage('Build Java Image') {
+    stage('Build Python Image') {
       git 'https://github.com/nchaudh03/python-flask-docker'
       container('kaniko') {
         stage('Build a Go project') {

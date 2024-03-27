@@ -26,8 +26,14 @@ podTemplate(yaml: '''
       git 'https://github.com/nchaudh03/python-flask-docker'
       container('kaniko') {
         stage('Build a Go project') {
-         sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=nchaudh03/python-flask-docker:${BUILD_NUMBER}'
+         sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=nchaudh03/python-flask-docker:v1.17'
         }
+      }
+    }
+    stage('Update Flux Repo') {
+      git 'https://github.com/nchaudh03/flux_mlops'
+      container('kaniko') {
+          echo 'hello-world'
       }
     }
 

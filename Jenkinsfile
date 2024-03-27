@@ -33,8 +33,12 @@ podTemplate(yaml: '''
     stage('Update Flux Repo') {
       git credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
       container('kaniko') {
-          script{ datas = readYaml (file: 'flux_mlops/apps/dev_mlops/python-flask-docker/kustomization.yaml') }
-          echo datas.ear_file.deploy.toString()
+        script {
+                    def output = sh(returnStdout: true, script: 'ls')
+                    echo "Output: ${output}"
+                }
+         // script{ datas = readYaml (file: 'flux_mlops/apps/dev_mlops/python-flask-docker/kustomization.yaml') }
+        // echo datas.ear_file.deploy.toString()
       }
     }
 

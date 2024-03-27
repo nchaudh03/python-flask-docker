@@ -22,25 +22,18 @@ podTemplate(yaml: '''
               path: config.json
 ''') {
   node(POD_LABEL) {
-      environment {
-        GITHUB_TOKEN=credentials('PAT_GITHUB')
-      }
     stage('Build Python Image') {
       git 'https://github.com/nchaudh03/python-flask-docker'
       container('kaniko') {
         stage('Build a Go project') {
-         echo "$GITHUB_TOKEN"
          sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=nchaudh03/python-flask-docker:v1.17'
         }
       }
     }
     stage('Update Flux Repo') {
-      environment {
-        GITHUB_TOKEN=credentials('PAT_GITHUB')
-      }
-      git 'https://github.com/nchaudh03/flux_mlops'
+      git credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
       container('kaniko') {
-          echo "$GITHUB_TOKEN"
+          ls
       }
     }
 

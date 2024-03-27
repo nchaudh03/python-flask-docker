@@ -34,7 +34,7 @@ podTemplate(yaml: '''
       git credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
       container('kaniko') {
         script {
-                    def output = sh(returnStdout: true, script: 'ls')
+                    def output = sh(returnStdout: true, script: 'ls ..')
                     echo "Output: ${output}"
                 }
          // script{ datas = readYaml (file: 'flux_mlops/apps/dev_mlops/python-flask-docker/kustomization.yaml') }

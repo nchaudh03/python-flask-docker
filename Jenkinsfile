@@ -31,9 +31,12 @@ podTemplate(yaml: '''
       }
     }
     stage('Update Flux Repo') {
+      environment {
+        GITHUB_TOKEN=credentials('PAT_GITHUB')
+      }
       git 'https://github.com/nchaudh03/flux_mlops'
       container('kaniko') {
-          echo 'hello-world'
+          echo "$GITHUB_TOKEN"
       }
     }
 

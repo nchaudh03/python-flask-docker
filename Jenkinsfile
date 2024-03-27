@@ -22,10 +22,10 @@ podTemplate(yaml: '''
               path: config.json
 ''') {
   node(POD_LABEL) {
-    stage('Build Python Image') {
-          environment {
+      environment {
         GITHUB_TOKEN=credentials('PAT_GITHUB')
       }
+    stage('Build Python Image') {
       git 'https://github.com/nchaudh03/python-flask-docker'
       container('kaniko') {
         stage('Build a Go project') {

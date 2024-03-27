@@ -31,7 +31,7 @@ podTemplate(yaml: '''
       }
     }
     stage('Update Flux Repo') {
-      dir(flux_mlops) {
+      dir('flux_mlops') {
         git credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
       }
       container('kaniko') {

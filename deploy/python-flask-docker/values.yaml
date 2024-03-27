@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: nchaudh03/python-flask-docker1
+  repository: nchaudh03/python-flask-docker
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "4"
 
 imagePullSecrets: []
 nameOverride: ""

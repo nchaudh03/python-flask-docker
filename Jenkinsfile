@@ -28,7 +28,7 @@ podTemplate(yaml: '''
       }
       container('kaniko') {
         stage('Build a Go project') {
-         sh '/kaniko/executor -f `pwd`/python-flask-docker/Dockerfile -c `pwd`/python-flask-docker --insecure --skip-tls-verify --cache=true --destination=nchaudh03/python-flask-docker:v1.17'
+         sh '/kaniko/executor -f `pwd`/python-flask-docker/Dockerfile -c `pwd`/python-flask-docker --insecure --skip-tls-verify --cache=true --destination=nchaudh03/python-flask-docker:v1.18'
         }
       }
     }
@@ -42,7 +42,7 @@ podTemplate(yaml: '''
               def yamlFile = './apps/dev_mlops/python-flask-docker/python-flask-docker-values.yaml'
               def datas = readYaml(file: yamlFile)
               echo "Current version: ${datas.spec.chart.spec.version.toString()}"
-              datas.spec.chart.spec.version = "v0.1.2"
+              datas.spec.chart.spec.version = "v0.1.3"
               echo "Updated version: ${datas.spec.chart.spec.version.toString()}"
               writeYaml file: yamlFile, data: datas, overwrite: true
 
@@ -63,7 +63,7 @@ podTemplate(yaml: '''
                     sh 'echo $USERNAME'
                     sh 'git add .'
                     sh 'git add .'
-                    sh "git commit -m 'Update version to v1.1.1'"
+                    sh "git commit -m 'Update version to v0.1.3'"
                     sh 'git push origin main'
                 } else {
                     echo "No changes to commit."

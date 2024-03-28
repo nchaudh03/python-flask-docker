@@ -28,10 +28,11 @@ podTemplate(yaml: '''
       }
       container('kaniko') {
         stage('Build a Go project') {
-         sh '/kaniko/executor -f `pwd`/python-flask-docker/Dockerfile -c `pwd`/python-flask-docker --insecure --skip-tls-verify --cache=true --destination=nchaudh03/python-flask-docker:v1.19'
+         sh '/kaniko/executor -f `pwd`/python-flask-docker/Dockerfile -c `pwd`/python-flask-docker --insecure --skip-tls-verify --cache=true --destination=nchaudh03/python-flask-docker:v1.20'
         }
       }
     }
+    /*
   stage('Update Flux Repo') {
       node {
           dir('flux_mlops') {
@@ -62,7 +63,6 @@ podTemplate(yaml: '''
               if (!changes.empty) {
                     sh 'echo $USERNAME'
                     sh 'git add .'
-                    sh 'git add .'
                     sh "git commit -m 'Update version to v0.1.4'"
                     sh 'git push origin main'
                 } else {
@@ -72,6 +72,6 @@ podTemplate(yaml: '''
           }
       }
   }
-
+*/
   }
 }

@@ -41,7 +41,7 @@ podTemplate(yaml: '''
                 }
         script{ 
           datas = readYaml (file: './flux_mlops/apps/dev_mlops/python-flask-docker/kustomization.yaml')
-        //  echo datas.ear_file.deploy.toString()
+          echo datas.toString()
         }
       }
     }

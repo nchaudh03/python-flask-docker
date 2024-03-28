@@ -36,7 +36,7 @@ podTemplate(yaml: '''
       dir('flux_mlops') {
         git branch: 'main', credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
       }
-      container('kaniko') {
+      //container('kaniko') {
         script{ 
           def yamlFile = './flux_mlops/apps/dev_mlops/python-flask-docker/python-flask-docker-values.yaml'
           def datas = readYaml(file: yamlFile)
@@ -45,7 +45,7 @@ podTemplate(yaml: '''
           echo "Updated version: ${datas.spec.chart.spec.version.toString()}"
           writeYaml file: yamlFile, data: datas, overwrite: true
           }
-        }
+       // }
       dir('flux_mlops') {
           //def git = libraryResource 'git.groovy'
           git branch: 'main', credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'

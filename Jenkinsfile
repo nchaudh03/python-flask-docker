@@ -46,26 +46,28 @@ podTemplate(yaml: '''
               echo "Updated version: ${datas.spec.chart.spec.version.toString()}"
               writeYaml file: yamlFile, data: datas, overwrite: true
 
-              // Configure Git user
-              sh 'git config --global user.email "nchaudh03@gmail.com"'
-              sh 'git config --global user.name "nchaudh03"'
-              sh 'git config --list'
-              sh 'git config --get remote.origin.url'
+              withCredentials([usernamePassword(credentialsId: 'PAT_GITHUB', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                // Configure Git user
+                sh 'git config --global user.email "nchaudh03@gmail.com"'
+                sh 'git config --global user.name $USERNAME'
+                sh 'git config --global url.https://$PASSWORD@github.com/.insteadOf https://github.com/'
+                sh 'git config --list'
+                sh 'git config --get remote.origin.url'
 
-            // Check for changes using git status
-            def changes = sh(returnStdout: true, script: 'git status --porcelain').trim()
+              // Check for changes using git status
+              def changes = sh(returnStdout: true, script: 'git status --porcelain').trim()
 
-            // Commit and push changes if there are any
-            withCredentials([usernamePassword(credentialsId: 'PAT_GITHUB', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            if (!changes.empty) {
-                  sh 'echo $USERNAME'
-                  sh 'git add .'
-                  sh 'git add .'
-                  sh "git commit -m 'Update version to v1.1.1'"
-                  sh 'git push origin main'
-              } else {
-                  echo "No changes to commit."
-              }
+              // Commit and push changes if there are any
+
+              if (!changes.empty) {
+                    sh 'echo $USERNAME'
+                    sh 'git add .'
+                    sh 'git add .'
+                    sh "git commit -m 'Update version to v1.1.1'"
+                    sh 'git push origin main'
+                } else {
+                    echo "No changes to commit."
+                }
             }
           }
       }

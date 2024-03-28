@@ -41,7 +41,7 @@ podTemplate(yaml: '''
                 }
         script{ 
           datas = readYaml (file: './flux_mlops/apps/dev_mlops/python-flask-docker/python-flask-docker-values.yaml')
-          echo datas.toString()
+          echo datas.spec.chart.spec.version.toString()
         }
       }
     }

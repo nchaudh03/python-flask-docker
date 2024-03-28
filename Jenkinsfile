@@ -32,33 +32,38 @@ podTemplate(yaml: '''
         }
       }
     }
-    stage('Update Flux Repo') {
-      dir('flux_mlops') {
-        git branch: 'main', credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
-      }
-      //container('kaniko') {
-        script{ 
-          def yamlFile = './flux_mlops/apps/dev_mlops/python-flask-docker/python-flask-docker-values.yaml'
-          def datas = readYaml(file: yamlFile)
-          echo "Current version: ${datas.spec.chart.spec.version.toString()}"
-          datas.spec.chart.spec.version = "v0.1.2"
-          echo "Updated version: ${datas.spec.chart.spec.version.toString()}"
-          writeYaml file: yamlFile, data: datas, overwrite: true
+  stage('Update Flux Repo') {
+      node {
+          dir('flux_mlops') {
+              // Checkout the Git repository
+              git branch: 'main', credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
+
+              // Update the YAML file
+              def yamlFile = './apps/dev_mlops/python-flask-docker/python-flask-docker-values.yaml'
+              def datas = readYaml(file: yamlFile)
+              echo "Current version: ${datas.spec.chart.spec.version.toString()}"
+              datas.spec.chart.spec.version = "v0.1.2"
+              echo "Updated version: ${datas.spec.chart.spec.version.toString()}"
+              writeYaml file: yamlFile, data: datas, overwrite: true
+
+              // Configure Git user
+              sh 'git config --global user.email "nchaudh03@gmail.com"'
+              sh 'git config --global user.name "nchaudh03"'
+
+              // Check if there are changes to commit
+              def hasChanges = sh(returnStatus: true, script: 'git diff --exit-code').status != 0
+
+              // Commit and push changes if there are any
+              if (hasChanges) {
+                  sh 'git add .'
+                  sh "git commit -m 'Update version to v1.1.1'"
+                  sh 'git push origin main'
+              } else {
+                  echo "No changes to commit."
+              }
           }
-       // }
-      dir('flux_mlops') {
-          //def git = libraryResource 'git.groovy'
-          git branch: 'main', credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
-          ///git add "."
-          //git commit "Update version to v1.1.1"
-          //git push
-          sh 'git config --global user.email "nchaudh03@gmail.com"'
-          sh 'git config --global user.name "nchaudh03"'
-          sh 'git add . '
-          sh "git commit -m 'Update version to v1.1.1'"
-          sh "git push origin main"
       }
-    }
+  }
 
   }
 }

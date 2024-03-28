@@ -56,7 +56,9 @@ podTemplate(yaml: '''
             def changes = sh(returnStdout: true, script: 'git status --porcelain').trim()
 
             // Commit and push changes if there are any
+            withCredentials([usernamePassword(credentialsId: 'PAT_GITHUB', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             if (!changes.empty) {
+                  sh 'echo $USERNAME'
                   sh 'git add .'
                   sh 'git add .'
                   sh "git commit -m 'Update version to v1.1.1'"
@@ -64,6 +66,7 @@ podTemplate(yaml: '''
               } else {
                   echo "No changes to commit."
               }
+            }
           }
       }
   }

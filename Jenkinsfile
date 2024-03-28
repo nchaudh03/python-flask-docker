@@ -50,11 +50,11 @@ podTemplate(yaml: '''
               sh 'git config --global user.email "nchaudh03@gmail.com"'
               sh 'git config --global user.name "nchaudh03"'
 
-              // Check if there are changes to commit
-              def hasChanges = sh(returnStatus: true, script: 'git diff --exit-code').status != 0
-
-              // Commit and push changes if there are any
-              if (hasChanges) {
+            // Check for changes using changeset
+            def changeSet = changeset from: scm, to: [$class: 'LastBuild', inverse: true]
+            
+            // Commit and push changes if there are any
+            if (!changeSet.isEmpty()) {
                   sh 'git add .'
                   sh "git commit -m 'Update version to v1.1.1'"
                   sh 'git push origin main'

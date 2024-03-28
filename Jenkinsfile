@@ -23,10 +23,12 @@ podTemplate(yaml: '''
 ''') {
   node(POD_LABEL) {
     stage('Build Python Image') {
-      git 'https://github.com/nchaudh03/python-flask-docker'
+      dir('python-flask-docker') {
+        git 'https://github.com/nchaudh03/python-flask-docker'
+      }
       container('kaniko') {
         stage('Build a Go project') {
-         sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=nchaudh03/python-flask-docker:v1.17'
+         sh '/kaniko/executor -f `pwd`/python-flask-docker/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=nchaudh03/python-flask-docker:v1.17'
         }
       }
     }

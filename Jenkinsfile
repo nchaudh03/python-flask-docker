@@ -37,13 +37,15 @@ podTemplate(yaml: '''
         git branch: 'main', credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
       }
       container('kaniko') {
-        script {
-                    def output = sh(returnStdout: true, script: 'ls ./flux_mlops')
-                    echo "Output: ${output}"
-                }
         script{ 
-          datas = readYaml (file: './flux_mlops/apps/dev_mlops/python-flask-docker/python-flask-docker-values.yaml')
-          echo datas.spec.chart.spec.version.toString()
+          def yamlFile = './flux_mlops/apps/dev_mlops/python-flask-docker/python-flask-docker-values.yaml'
+          def datas = readYaml(file: yamlFile)
+          echo "Current version: ${datas.spec.chart.spec.version.toString()}"
+          datas.spec.chart.spec.version = "v1.1.1"
+          echo "Updated version: ${datas.spec.chart.spec.version.toString()}"
+          writeYaml file: yamlFile, data: datas
+          sh "git -C ./flux_mlops commit -am 'Update version to v1.1.1'"
+          sh "git -C ./flux_mlops push"
         }
       }
     }

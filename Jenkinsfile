@@ -40,7 +40,7 @@ podTemplate(yaml: '''
                     echo "Output: ${output}"
                 }
         script{ 
-          datas = readYaml (file: './flux_mlops/apps/dev_mlops/python-flask-docker/kustomization.yaml')
+          datas = readYaml (file: './flux_mlops/apps/dev_mlops/python-flask-docker/python-flask-docker-values.yaml')
           echo datas.toString()
         }
       }

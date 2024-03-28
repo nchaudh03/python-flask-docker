@@ -36,7 +36,7 @@ podTemplate(yaml: '''
       }
       container('kaniko') {
         script {
-                    def output = sh(returnStdout: true, script: 'ls /flux_mlops')
+                    def output = sh(returnStdout: true, script: 'ls ')
                     echo "Output: ${output}"
                 }
         script {

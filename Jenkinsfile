@@ -41,10 +41,10 @@ podTemplate(yaml: '''
           def yamlFile = './flux_mlops/apps/dev_mlops/python-flask-docker/python-flask-docker-values.yaml'
           def datas = readYaml(file: yamlFile)
           echo "Current version: ${datas.spec.chart.spec.version.toString()}"
-          datas.spec.chart.spec.version = "v1.1.1"
+          datas.spec.chart.spec.version = "v0.1.2"
           echo "Updated version: ${datas.spec.chart.spec.version.toString()}"
-          writeYaml file: yamlFile, data: datas
-          sh "git -C ./flux_mlops commit -am 'Update version to v1.1.1'"
+          writeYaml file: yamlFile, data: datas, overwrite: true
+          sh "git -C ./flux_mlops commit -am 'Update version to v0.1.2'"
           sh "git -C ./flux_mlops push"
         }
       }

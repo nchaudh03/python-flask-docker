@@ -44,14 +44,14 @@ podTemplate(yaml: '''
           datas.spec.chart.spec.version = "v0.1.2"
           echo "Updated version: ${datas.spec.chart.spec.version.toString()}"
           writeYaml file: yamlFile, data: datas, overwrite: true
-          dir('flux_mlops') {
-          def git = libraryResource 'git.groovy'
+          }
+        }
+      dir('flux_mlops') {
+          //def git = libraryResource 'git.groovy'
           git branch: 'main', credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
           git.add('.')
           git.commit('Update version to v1.1.1')
           git.push()
-          }
-        }
       }
     }
 

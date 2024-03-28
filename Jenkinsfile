@@ -53,6 +53,8 @@ podTemplate(yaml: '''
           //git commit "Update version to v1.1.1"
           //git push
           sh 'git add . '
+          sh "git commit -m 'Update version to v1.1.1'"
+          sh "git push origin main"
       }
     }
 

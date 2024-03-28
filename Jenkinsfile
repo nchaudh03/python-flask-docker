@@ -32,11 +32,11 @@ podTemplate(yaml: '''
     }
     stage('Update Flux Repo') {
       dir('flux_mlops') {
-        git credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
+        git branch: 'main', credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
       }
       container('kaniko') {
         script {
-                    def output = sh(returnStdout: true, script: 'ls')
+                    def output = sh(returnStdout: true, script: 'ls /flux_mlops')
                     echo "Output: ${output}"
                 }
         script {

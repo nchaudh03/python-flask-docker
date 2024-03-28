@@ -50,11 +50,12 @@ podTemplate(yaml: '''
               sh 'git config --global user.email "nchaudh03@gmail.com"'
               sh 'git config --global user.name "nchaudh03"'
 
-            // Check for changes using changeset
-            def changeSet = changeset from: scm, to: [$class: 'LastBuild', inverse: true]
-            
+            // Check for changes using git status
+            def changes = sh(returnStdout: true, script: 'git status --porcelain').trim()
+
             // Commit and push changes if there are any
-            if (!changeSet.isEmpty()) {
+            if (!changes.empty) {
+                  sh 'git add .'
                   sh 'git add .'
                   sh "git commit -m 'Update version to v1.1.1'"
                   sh 'git push origin main'

@@ -50,8 +50,9 @@ podTemplate(yaml: '''
           //def git = libraryResource 'git.groovy'
           git branch: 'main', credentialsId: 'PAT_GITHUB', url: 'https://github.com/nchaudh03/flux_mlops'
           ///git add "."
-          git commit "Update version to v1.1.1"
-          git push
+          //git commit "Update version to v1.1.1"
+          //git push
+          sh 'git add . '
       }
     }
 

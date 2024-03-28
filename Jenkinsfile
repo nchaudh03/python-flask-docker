@@ -49,6 +49,7 @@ podTemplate(yaml: '''
               // Configure Git user
               sh 'git config --global user.email "nchaudh03@gmail.com"'
               sh 'git config --global user.name "nchaudh03"'
+              sh 'git config --list'
 
             // Check for changes using git status
             def changes = sh(returnStdout: true, script: 'git status --porcelain').trim()

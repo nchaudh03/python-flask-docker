@@ -39,8 +39,10 @@ podTemplate(yaml: '''
                     def output = sh(returnStdout: true, script: 'ls')
                     echo "Output: ${output}"
                 }
-        script{ datas = readYaml (file: 'flux_mlops/apps/dev_mlops/python-flask-docker/kustomization.yaml') }
-        echo datas.ear_file.deploy.toString()
+        script{ 
+          datas = readYaml (file: 'flux_mlops/apps/dev_mlops/python-flask-docker/kustomization.yaml')
+          echo datas.ear_file.deploy.toString()
+        }
       }
     }
 
